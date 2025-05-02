@@ -2,7 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\{ProductController,OrderController,CategoryController,ShopController};
+use App\Http\Controllers\{ProductController,OrderController,CategoryController,ShopController,};
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\UserController;
+
+use Illuminate\Contracts\Routing\Registrar;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,19 +29,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 // Add this GET route for admin to manage categories
 
-
-// Keep the existing POST route for storing categories
-Route::post('/admin/categories', [CategoryController::class, 'store'])->name('admin.categories.store');
+  
 
 Route::middleware(['auth'])->group(function () {
     // Products and orders routes
     Route::resource('products', ProductController::class)->except(['show']);
     Route::resource('orders', OrderController::class)->only(['store', 'index']);
-
-
-     // Route to display the category management form (GET)
-    Route::get('dashboard/categories', [CategoryController::class, 'index'])->name('dashboard.categories.index');
-
-    // Route to handle storing the category (POST)
-    Route::post('dashboard/categories', [CategoryController::class, 'store'])->name('dashboard.categories.store');
+    
+      Route::get('/{user}', [UserController::class, 'edit'])->name('profile.edit');
+       Route::put('/update', [UserController::class, 'update'])->name('profile.update');
+  // Route to display the category management form (GET)
+   /*  Route::get('/categories', [CategoryController::class, 'indexcateg'])->name('category.indexcateg');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store'); */
+Route::resource('categories', CategoryController::class);
+ 
 });

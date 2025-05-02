@@ -86,25 +86,32 @@
                         <a class="item nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         @endif
                         @else
+@if( Auth::user()->img)
+    <img src="{{ asset('storage/' .  Auth::user()->img) }}" alt="Profile Image" width="80">
+@endif
+                       <li class="nav-item dropdown">
+    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+        {{ Auth::user()->name }}
+    </a>
 
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
+    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <!-- Profile Link -->
+       <a class="dropdown-item" href="{{ route('profile.edit', Auth::user()->id) }}">
+            {{ __('Profile') }}
+        </a>
+        <a class="dropdown-item" href="{{ route('logout') }}"
+           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            {{ __('Logout') }}
+        </a>
 
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
+        <!-- Logout Form -->
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
+    </div>
+</li>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-
-                        </li>
 
                      
                         @endguest
@@ -113,7 +120,7 @@
                         @auth
     @if(Auth::user()->role === 'admin')
         <div>
-            <a href="{{ route('dashboard.categories.index') }}" class="btn btn-primary my-3 px-3 d-none d-lg-flex">Manage Categories</a>
+       <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('categories.index') }}" class="btn btn-primary">Manage Categories</a>
         </div>
     @elseif(Auth::user()->role === 'seller')
         <div>
