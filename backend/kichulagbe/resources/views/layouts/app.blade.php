@@ -67,30 +67,7 @@
                             <a href="{{ route('products.index') }}" class="nav-link ">My Item</a>
                           
                         </div>
-<!-- <div class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Category</a>
-    <div class="dropdown-menu rounded-0 m-0">
-        @foreach($categoriespro as $category)
-            <a href="{{ route('category.show', $category->slug) }}" class="dropdown-item">
-                {{ $category->name }}
-            </a>
-        @endforeach
-    </div>
-</div><script>
-    document.querySelectorAll('.category-link').forEach(item => {
-        item.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent default anchor behavior
-            let categorySlug = this.getAttribute('data-category'); // Get category slug from data attribute
-            let tabId = `#tab-${categorySlug}`; // Get corresponding tab ID
 
-            // Hide all tabs and show the selected tab
-            document.querySelectorAll('.tab-pane').forEach(tab => {
-                tab.classList.remove('show', 'active');
-            });
-            document.querySelector(tabId).classList.add('show', 'active'); // Activate the selected tab
-        });
-    });
-</script> -->
 
                         <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
 
