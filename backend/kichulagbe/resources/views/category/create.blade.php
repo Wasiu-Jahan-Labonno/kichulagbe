@@ -8,7 +8,7 @@
                 <h5 class="mb-0">Add New Category</h5>
             </div>
             <div class="card-body p-4">
-                <form action="{{ route('categories.store') }}" method="POST">
+                <form action="{{ route('category.store') }}" method="POST">
                     @csrf
 
                     <div class="mb-3">
