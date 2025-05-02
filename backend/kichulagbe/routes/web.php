@@ -28,7 +28,8 @@ Auth::routes();
 // Public Routes
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-Route::get('contact ', [HomeController::class, 'contact'])->name('contact');
+Route::get('contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('about', [HomeController::class, 'about'])->name('about');
 /*  Route::prefix('profile')->group(function () {
         Route::get('/{user}', [UserController::class, 'edit'])->name('profile.edit');
         Route::put('update', [UserController::class, 'update'])->name('profile.update');
@@ -44,16 +45,16 @@ Route::middleware(['auth'])->group(function () {
    Route::resource('products', ProductController::class);
     Route::get('/list', [HomeController::class, 'list'])->name('list');
 
-    Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
+  /*   Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show'); */
     /* // Product Management
     Route::resource('products', ProductController::class)->except(['show']);
 
     // Orders
     Route::resource('orders', OrderController::class)->only(['store', 'index']); */
-Route::get('/category/catindex', [CategoryController::class, 'index'])->name('category.index');
+
     // Category Management (Grouped under 'category' prefix)
     Route::prefix('category')->name('category.')->group(function () {
-        Route::get('/catindex', [CategoryController::class, 'index'])->name('index');
+        Route::get('/index', [CategoryController::class, 'index'])->name('index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
         Route::post('/store', [CategoryController::class, 'store'])->name('store');
         Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');

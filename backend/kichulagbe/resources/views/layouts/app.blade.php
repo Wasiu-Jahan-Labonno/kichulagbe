@@ -62,7 +62,7 @@
                     <div class="navbar-nav ms-auto">
 
                         <a href="{{ url('/home') }}" class="nav-item nav-link active">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
                         <div class="nav-item dropdown">
                             <a href="{{ route('products.index') }}" class="nav-link ">My Item</a>
                           
@@ -92,7 +92,7 @@
     });
 </script> -->
 
-                        <a href="{{ route('contact')}}" class="nav-item nav-link">Contact</a>
+                        <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
 
 
                         @guest

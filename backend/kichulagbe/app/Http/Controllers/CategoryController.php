@@ -107,5 +107,8 @@ class CategoryController extends Controller
 
         return redirect()->route('category.index')->with('success', 'Category deleted successfully.');
     }
-    
+    public function show($slug) {
+    $category = Category::where('slug', $slug)->with('products')->firstOrFail();
+    return view('list', compact('category'));
+}
 }
