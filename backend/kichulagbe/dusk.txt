@@ -1,0 +1,11 @@
+composer require --dev laravel/dusk
+php artisan dusk:install
+APP_URL=http://127.0.0.1:8000
+DUSK_HEADLESS_DISABLED=true
+php artisan dusk:make ExampleTest
+
+php artisan dusk:chrome-driver --detect
+
+php artisan serve --port=8080
+
+php artisan dusk

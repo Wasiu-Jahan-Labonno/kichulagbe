@@ -14,10 +14,10 @@
         <div class="col-md-6 animated fadeIn">
             <div class="owl-carousel header-carousel">
                 <div class="owl-carousel-item">
-                    <img class="img-fluid" src="img/carousel-1.jpg" alt="">
+                    <img class="img-fluid" src="{{ asset('img/carousel-1.jpg') }}" alt="">
                 </div>
                 <div class="owl-carousel-item">
-                    <img class="img-fluid" src="img/carousel-2.jpg" alt="">
+                    <img class="img-fluid" src="{{ asset('img/carousel-2.jpg') }}" alt="">
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                     <a class="cat-item d-block bg-light text-center rounded p-3" href="#">
                         <div class="rounded p-4">
                             <div class="icon mb-3">
-                                <img class="img-fluid" src="{{ $category->image ?? 'default-image.jpg' }}" alt="Icon">
+                                <img class="img-fluid" src=" {{ asset('storage/' . $category->img) }}" alt="Icon">
                             </div>
                             <h6>{{ $category->name }}</h6>
                             <span>{{ $category->properties_count }} Properties</span> <!-- Replace with the actual property count field -->
@@ -133,36 +133,47 @@
             </div>
         </div>
         <div class="tab-content">
-            @foreach($categories as $category)
-                <div id="tab-{{ $category->id }}" class="tab-pane fade show p-0 {{ $loop->first ? 'active' : '' }}">
-                    <h3>{{ $category->name }}</h3>
-                    <div class="row g-4">
-                        @foreach($category->products as $product)
-                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                                <div class="property-item rounded overflow-hidden">
-                                    <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"></a>
-                                        <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">{{ $category->name }}</div>
-                                    </div>
-                                    <div class="p-4 pb-0">
-                                        <h5 class="text-primary mb-3">${{ number_format($product->price, 2) }}</h5>
-                                        <a class="d-block h5 mb-2" href="">{{ $product->name }}</a> <!-- This is where the product name is displayed -->
-                                        <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ $product->description }}</p>
-                                    </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>{{ $product->stock }} Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                        <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
-                            <a class="btn btn-primary py-3 px-5" href="{{ route('list') }}">Browse More Property</a>
+@foreach($categories as $category)
+    <div id="tab-{{ $category->id }}" class="tab-pane fade show p-0 {{ $loop->first ? 'active' : '' }}">
+        <h3>{{ $category->name }}</h3>
+        <div class="row g-4">
+            @foreach($category->products as $product)
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="property-item rounded overflow-hidden">
+                        <div class="position-relative overflow-hidden">
+                            
+                            @if($product->image)
+                                <a href=""><img class="img-fluid" src=" {{ asset('storage/' . $product->image) }} " alt="{{ $product->name }}"></a>
+                            @else
+                                <p>Image not found: {{ asset('storage/categories/' . $product->image) }}</p>
+                                <a href=""><img class="img-fluid" src="{{ asset('images/default-product.jpg') }}" alt="Default Image"></a>
+                            @endif
+                            <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">{{ $category->name }}</div>
+                        </div>
+                        <div class="p-4 pb-0">
+                            <h5 class="text-primary mb-3">${{ number_format($product->price, 2) }}</h5>
+                            <a class="d-block h5 mb-2" href="">{{ $product->name }}</a>
+                            <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ $product->description }}</p>
+                        </div>
+                        <div class="d-flex border-top">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>{{ $product->stock }} Sqft</small>
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
                         </div>
                     </div>
                 </div>
             @endforeach
+            <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
+                <a class="btn btn-primary py-3 px-5" href="{{ route('list') }}">Browse More Property</a>
+            </div>
+        </div>
+    </div>
+@endforeach
+
+
+
+
+
         </div>
     </div>
 </div>
