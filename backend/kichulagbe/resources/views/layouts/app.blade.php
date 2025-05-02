@@ -1,34 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <meta charset="utf-8">
-    <title>Lagbe kichu </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{ asset('img/favicon.ico') }}" rel="icon">
 
+
+    
+ 
     <!-- Google Web Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
+    <!-- Icon Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <!-- External Libraries CSS -->
+    <link href="{{ asset('lib/animate/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Customized Bootstrap CSS -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <!-- Main Template CSS -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -56,25 +61,38 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
 
-                        <a href="{{ url('/') }}" class="nav-item nav-link active">Home</a>
+                        <a href="{{ url('/home') }}" class="nav-item nav-link active">Home</a>
                         <a href="about.html" class="nav-item nav-link">About</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Property</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="property-list.html" class="dropdown-item">Property List</a>
-                                <a href="property-type.html" class="dropdown-item">Property Type</a>
-                                <a href="property-agent.html" class="dropdown-item">Property Agent</a>
-                            </div>
+                            <a href="{{ route('products.index') }}" class="nav-link ">My Item</a>
+                          
                         </div>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="404.html" class="dropdown-item">404 Error</a>
-                            </div>
-                        </div>
+<!-- <div class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Category</a>
+    <div class="dropdown-menu rounded-0 m-0">
+        @foreach($categoriespro as $category)
+            <a href="{{ route('category.show', $category->slug) }}" class="dropdown-item">
+                {{ $category->name }}
+            </a>
+        @endforeach
+    </div>
+</div><script>
+    document.querySelectorAll('.category-link').forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            let categorySlug = this.getAttribute('data-category'); // Get category slug from data attribute
+            let tabId = `#tab-${categorySlug}`; // Get corresponding tab ID
 
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+            // Hide all tabs and show the selected tab
+            document.querySelectorAll('.tab-pane').forEach(tab => {
+                tab.classList.remove('show', 'active');
+            });
+            document.querySelector(tabId).classList.add('show', 'active'); // Activate the selected tab
+        });
+    });
+</script> -->
+
+                        <a href="{{ route('contact')}}" class="nav-item nav-link">Contact</a>
 
 
                         @guest
@@ -86,10 +104,10 @@
                         <a class="item nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         @endif
                         @else
-@if( Auth::user()->img)
-    <img src="{{ asset('storage/' .  Auth::user()->img) }}" alt="Profile Image" width="80">
+@if(Auth::user()->img)
+<img src="{{ asset('storage/' . Auth::user()->img) }}" alt="Profile" class="rounded-circle me-2 mt-3" style="width:40px; height:40px; object-fit:cover;">
 @endif
-                       <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
         {{ Auth::user()->name }}
@@ -236,9 +254,11 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('js/main.js') }}"></script>
-
+@push('scripts')
+<script>console.log('Custom JS for this page');</script>
+@endpush
     <!-- Vite Scripts -->
     @vite(['resources/js/app.js'])
 </body>
-
+@stack('scripts')
 </html>
