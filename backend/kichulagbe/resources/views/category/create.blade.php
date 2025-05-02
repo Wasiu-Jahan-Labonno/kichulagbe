@@ -1,46 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container d-flex justify-content-center mt-5">
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white text-center py-2">
-                <h5 class="mb-0">Add New Category</h5>
-            </div>
-            <div class="card-body p-4">
-                <form action="{{ route('category.store') }}" method="POST">
-                    @csrf
+<div class="container">
+    <h1>Create New Category</h1>
 
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Category Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            required
-                            class="form-control"
-                            placeholder="Enter category name">
-                    </div>
+    <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
 
-                    <div class="mb-3">
-                        <label for="slug" class="form-label">Slug</label>
-                        <input
-                            type="text"
-                            id="slug"
-                            name="slug"
-                            required
-                            class="form-control"
-                            placeholder="Enter slug (example: men-shoes)">
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="btn btn-success w-100">
-                        Save Category
-                    </button>
-                </form>
-            </div>
+        <div class="form-group">
+            <label for="name">Category Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
+            
+            @error('name')
+                <div class="alert alert-danger mt-2">{{ $message }}</div>
+            @enderror
         </div>
-    </div>
+
+        <div class="form-group">
+            <label for="slug">Slug (Optional)</label>
+            <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug') }}">
+            
+            @error('slug')
+                <div class="alert alert-danger mt-2">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="img">Category Image (Optional)</label>
+            <input type="file" class="form-control" id="img" name="img">
+            
+            @error('img')
+                <div class="alert alert-danger mt-2">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">Create Category</button>
+    </form>
+
+    <a href="{{ route('category.index') }}" class="btn btn-secondary mt-3">Back to Categories</a>
 </div>
 @endsection

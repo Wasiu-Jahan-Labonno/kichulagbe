@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\{ProductController,OrderController,CategoryController,ShopController,};
+use App\Http\Controllers\{HomeController,ProductController,OrderController,CategoryController,ShopController,};
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\UserController;
 
@@ -25,38 +25,39 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Public Routes
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-// Add this GET route for admin to manage categories
-
-  Route::prefix('profile')->group(function () {
-    Route::get('{user}/edit', [UserController::class, 'edit'])->name('profile.edit');
-    Route::put('update', [UserController::class, 'update'])->name('profile.update');
-});
-
+Route::get('contact ', [HomeController::class, 'contact'])->name('contact');
+/*  Route::prefix('profile')->group(function () {
+        Route::get('/{user}', [UserController::class, 'edit'])->name('profile.edit');
+        Route::put('update', [UserController::class, 'update'])->name('profile.update');
+    }); */
+// Authenticated Routes
 Route::middleware(['auth'])->group(function () {
-    // Products and orders routes
-    Route::resource('products', ProductController::class)->except(['show']);
-    Route::resource('orders', OrderController::class)->only(['store', 'index']);
-    
-  /*     Route::get('/{user}', [UserController::class, 'edit'])->name('profile.edit');
-       Route::put('/update', [UserController::class, 'update'])->name('profile.update'); */
-  // Route to display the category management form (GET)
-/*     Route::get('/categories', [CategoryController::class, 'indexcateg'])->name('    ');
-    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store'); */
 
- Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
-    Route::get('/categories/create', [CategoryController::class, 'create'])->name('category.create');
-    Route::post('/categories', [CategoryController::class, 'store'])->name('category.store');
-    Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
-    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
-/* 
-Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');        // List
-Route::get('/categories/create', [CategoryController::class, 'create'])->name('category.create'); // Show form
-Route::post('/categories', [CategoryController::class, 'store'])->name('category.store');         // Save new
-Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');  // Show edit form
-Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('category.update');   // Update
-Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('category.destroy'); // Delete
-  */
-});
+    // Profile Routes (Grouped under 'profile' prefix)
+    Route::prefix('profile')->group(function () {
+        Route::get('{user}', [UserController::class, 'edit'])->name('profile.edit');
+        Route::put('update', [UserController::class, 'update'])->name('profile.update');
+    });
+   Route::resource('products', ProductController::class);
+    Route::get('/list', [HomeController::class, 'list'])->name('list');
+
+    Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
+    /* // Product Management
+    Route::resource('products', ProductController::class)->except(['show']);
+
+    // Orders
+    Route::resource('orders', OrderController::class)->only(['store', 'index']); */
+Route::get('/category/catindex', [CategoryController::class, 'index'])->name('category.index');
+    // Category Management (Grouped under 'category' prefix)
+    Route::prefix('category')->name('category.')->group(function () {
+        Route::get('/catindex', [CategoryController::class, 'index'])->name('index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('create');
+        Route::post('/store', [CategoryController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+    });
+    });

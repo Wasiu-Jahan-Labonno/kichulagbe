@@ -70,10 +70,10 @@
                             <label for="role" class="col-md-4 col-form-label text-md-end">{{ __('Role') }}</label>
 
                             <div class="col-md-6">
-                                <select id="role" class="form-control @error('role') is-invalid @enderror" name="role" required>
-                                    <option value="buyer">Buyer</option>
-                                    <option value="seller">Seller</option>
-                                </select>
+                                    <select name="role" class="form-control" required>
+        <option value="buyer">Buyer</option>
+        <option value="seller">Seller</option>
+    </select>
 
                                 @error('role')
                                 <span class="invalid-feedback" role="alert">
