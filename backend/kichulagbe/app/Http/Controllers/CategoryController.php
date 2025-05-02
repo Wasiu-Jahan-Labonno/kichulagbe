@@ -13,7 +13,7 @@ class CategoryController extends Controller
         return view('category.indexcateg');  // The form for adding categories
     }
 
-    // Store the category (POST)
+ /*    // Store the category (POST)
     public function store(Request $request)
     {
         $request->validate([
@@ -27,54 +27,58 @@ class CategoryController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Category created successfully!');
+    } */
+  public function index()
+    {
+        $categories = Category::all();
+        return view('category.index', compact('categories'));
     }
 
- public function index()
-{
-    $categories = Category::all();
-    return view('categories.index', compact('categories'));
-}
+    public function create()
+    {
+        return view('category.create');
+    }
 
-public function create()
-{
-    return view('categories.create');
-}
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name',
+        ]);
 
-public function store(Request $request)
-{
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'slug' => 'required|string|max:255|unique:categories',
-    ]);
+        Category::create([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+        ]);
 
-    Category::create($validated);
+        return redirect()->route('category.index')->with('success', 'Category created successfully.');
+    }
 
-    return redirect()->route('categories.index')->with('success', 'Category created successfully.');
-}
+    public function edit($id)
+    {
+        $category = Category::findOrFail($id);
+        return view('category.edit', compact('category'));
+    }
 
-public function edit(Category $category)
-{
-    return view('categories.edit', compact('category'));
-}
+    public function update(Request $request, $id)
+    {
+        $category = Category::findOrFail($id);
 
-public function update(Request $request, Category $category)
-{
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'slug' => 'required|string|max:255|unique:categories,slug,' . $category->id,
-    ]);
+        $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name,' . $id,
+        ]);
 
-    $category->update($validated);
+        $category->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+        ]);
 
-    return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
-}
+        return redirect()->route('category.index')->with('success', 'Category updated successfully.');
+    }
 
-public function destroy(Category $category)
-{
-    $category->delete();
-
-    return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
-}
-
+    public function destroy($id)
+    {
+        Category::destroy($id);
+        return redirect()->route('category.index')->with('success', 'Category deleted successfully.');
+    }
 }
 

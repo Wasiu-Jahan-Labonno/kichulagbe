@@ -97,9 +97,9 @@
 
     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
         <!-- Profile Link -->
-       <a class="dropdown-item" href="{{ route('profile.edit', Auth::user()->id) }}">
-            {{ __('Profile') }}
-        </a>
+       <a class="dropdown-item" href="{{ route('profile.edit', Auth::id()) }}">
+    {{ __('Profile') }}
+</a>
         <a class="dropdown-item" href="{{ route('logout') }}"
            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             {{ __('Logout') }}
@@ -120,7 +120,7 @@
                         @auth
     @if(Auth::user()->role === 'admin')
         <div>
-       <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('categories.index') }}" class="btn btn-primary">Manage Categories</a>
+       <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('category.index') }}" class="btn btn-primary">Manage Categories</a>
         </div>
     @elseif(Auth::user()->role === 'seller')
         <div>
