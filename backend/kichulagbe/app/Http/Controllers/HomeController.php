@@ -36,7 +36,12 @@ class HomeController extends Controller
         $properties = Product::all(); // Or use a specific category filter here
         return view('list', compact('properties'));
     }
-    public function contact(){
-          return view('contact',);
-    } 
+       public function contact()
+    {
+        return view('contact');
+    }
+      public function about()
+    {
+        return view('about');
+    }
 }
