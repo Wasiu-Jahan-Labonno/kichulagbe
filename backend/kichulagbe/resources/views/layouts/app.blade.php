@@ -12,8 +12,6 @@
     <link href="{{ asset('img/favicon.ico') }}" rel="icon">
 
 
-    
- 
     <!-- Google Web Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -35,7 +33,12 @@
     <!-- Main Template CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
+<style>
+.nav-link.active {
+    color:#00B98E !important;
 
+}
+</style>
 <body>
     <div class="container-xxl bg-white p-0">
         <!-- Spinner Start -->
@@ -53,83 +56,76 @@
                     <div class="icon p-2 me-2">
                         <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style="width: 30px; height: 30px;">
                     </div>
-                    <h1 class="m-0 text-primary">Lagbe kichu</h1>
+                    <h1 class="m-0 text-primary">kichu Lagbe </h1>
                 </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto">
+    <div class="navbar-nav ms-auto">
 
-                        <a href="{{ url('/home') }}" class="nav-item nav-link active">Home</a>
-                        <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
-                        <div class="nav-item dropdown">
-                            <a href="{{ route('products.index') }}" class="nav-link ">My Item</a>
-                          
-                        </div>
+        <a href="{{ url('/home') }}" class="nav-item nav-link {{ request()->is('home') ? 'active' : '' }}">Home</a>
 
+        <a href="{{ route('about') }}" class="nav-item nav-link {{ request()->routeIs('about') ? 'active' : '' }}">About</a>
 
-                        <a href="{{ route('contact') }}" class="nav-item nav-link">Contact</a>
+        <a href="{{ route('products.index') }}" class="nav-item nav-link {{ request()->routeIs('products.index') ? 'active' : '' }}">My Item</a>
 
+        <a href="{{ route('contact') }}" class="nav-item nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
 
-                        @guest
-                        @if (Route::has('login'))
-                        <a class="nav-item nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        @endif
+        @guest
+            @if (Route::has('login'))
+                <a class="nav-item nav-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">{{ __('Login') }}</a>
+            @endif
 
-                        @if (Route::has('register'))
-                        <a class="item nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        @endif
-                        @else
-@if(Auth::user()->img)
-<img src="{{ asset('storage/' . Auth::user()->img) }}" alt="Profile" class="rounded-circle me-2 mt-3" style="width:40px; height:40px; object-fit:cover;">
-@endif
+            @if (Route::has('register'))
+                <a class="nav-item nav-link {{ request()->routeIs('register') ? 'active' : '' }}" href="{{ route('register') }}">{{ __('Register') }}</a>
+            @endif
+        @else
+            @if(Auth::user()->img)
+                <img src="{{ asset('storage/' . Auth::user()->img) }}" alt="Profile" class="rounded-circle me-2 mt-3" style="width:40px; height:40px; object-fit:cover;">
+            @endif
+
             <li class="nav-item dropdown">
-    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-        {{ Auth::user()->name }}
-    </a>
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ Auth::user()->name }}
+                </a>
 
-    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-        <!-- Profile Link -->
-       <a class="dropdown-item" href="{{ route('profile.edit', Auth::id()) }}">
-    {{ __('Profile') }}
-</a>
-        <a class="dropdown-item" href="{{ route('logout') }}"
-           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            {{ __('Logout') }}
-        </a>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('profile.edit', Auth::id()) }}">
+                        {{ __('Profile') }}
+                    </a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
 
-        <!-- Logout Form -->
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-            @csrf
-        </form>
-    </div>
-</li>
-
-
-                     
-                        @endguest
-
-
-                        @auth
-    @if(Auth::user()->role === 'admin')
-        <div>
-       <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('category.index') }}" class="btn btn-primary">Manage Categories</a>
-        </div>
-    @elseif(Auth::user()->role === 'seller')
-        <div>
-            <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('products.create') }}">Add Product</a>
-        </div>
-    @elseif(Auth::user()->role === 'buyer')
-        <div>
-            <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('shop.index') }}">Shop</a>
-        </div>
-    @endif
-@endauth
-                    </div>
-
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
+            </li>
+        @endguest
+
+        @auth
+            @if(Auth::user()->role === 'admin')
+                <div>
+                    <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('category.index') }}">Manage Categories</a>
+                </div>
+            @elseif(Auth::user()->role === 'seller')
+                <div>
+                    <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('products.create') }}">Add Product</a>
+                </div>
+            @elseif(Auth::user()->role === 'buyer')
+                <div>
+                    <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('shop.index') }}">Shop</a>
+                </div>
+            @endif
+        @endauth
+
+    </div>
+</div>
+                
             </nav>
         </div>
         <!-- Navbar End -->

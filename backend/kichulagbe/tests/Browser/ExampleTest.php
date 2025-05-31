@@ -15,8 +15,13 @@ class ExampleTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
        $browser->visit('/login')
-        ->waitForText('Welcome to MyApp', 10000) // waits up to 10 seconds
-        ->assertSee('Welcome to MyApp');
+                ->assertTitleContains('kichulagbe') // Matches title check
+                ->type('email', 's@s.com')
+                ->type('password', '123456789')
+                ->press('#login-button') // Use press with button ID or text
+                ->pause(10000) // Pause for 10 seconds (10,000 milliseconds)
+                ->assertSee('Perfect Home'); // Check for successful login
         });
-    }
+    
+}
 }
