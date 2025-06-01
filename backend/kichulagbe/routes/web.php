@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\{HomeController,ProductController,OrderController,CategoryController,ShopController,};
+use App\Http\Controllers\{Controller, HomeController, ProductController, OrderController, CategoryController, ShopController,};
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\UserController;
 
@@ -19,10 +19,12 @@ use Illuminate\Contracts\Routing\Registrar;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
 });
+ */
 
+Route::get('/', [Controller::class, 'welcome'])->name('welcome');
 Auth::routes();
 
 // Public Routes
@@ -42,10 +44,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('{user}', [UserController::class, 'edit'])->name('profile.edit');
         Route::put('update', [UserController::class, 'update'])->name('profile.update');
     });
-   Route::resource('products', ProductController::class);
+    Route::resource('products', ProductController::class);
     Route::get('/list', [HomeController::class, 'list'])->name('list');
 
-  /*   Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show'); */
+    /*   Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show'); */
     /* // Product Management
     Route::resource('products', ProductController::class)->except(['show']);
 
@@ -61,4 +63,4 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('destroy');
     });
-    });
+});
