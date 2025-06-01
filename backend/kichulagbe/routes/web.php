@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\{HomeController,ProductController,OrderController,CategoryController,ShopController,};
+use App\Http\Controllers\{Controller, CartController,HomeController, ProductController, OrderController, CategoryController, ShopController,};
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\UserController;
 
@@ -37,6 +37,10 @@ Route::get('about', [HomeController::class, 'about'])->name('about');
         Route::put('update', [UserController::class, 'update'])->name('profile.update');
     }); */
 // Authenticated Routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('categories', 'CategoryController');
+});
+
 Route::middleware(['auth'])->group(function () {
 
     // Profile Routes (Grouped under 'profile' prefix)

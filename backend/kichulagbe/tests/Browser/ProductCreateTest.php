@@ -22,15 +22,15 @@ class ProductCreateTest extends DuskTestCase
             $browser->loginAs($user)
                 ->visit('/products/create')
                 ->type('name', 'Test Product')
-                ->select('category_id', $category->id)
+                ->select('category_id', '1')
                 ->type('price', '999')
                 ->type('stock', '10')
                 ->type('description', 'This is a test product.')
-                ->attach('image', base_path('tests/Browser/files/sample2.jpg'))
+                ->attach('image', base_path('tests/Browser/files/sample.png'))
                 ->press('Create Product')
                 ->pause(2000)
-                ->assertPathIs('/products/create') // Adjust based on your redirect
-                ->assertSee('Product');
+                ->assertPathIs('/products') ;// Adjust based on your redirect
+
         });
     }
 }

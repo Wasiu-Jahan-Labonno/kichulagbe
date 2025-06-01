@@ -25,6 +25,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
+ <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <!-- External Libraries CSS -->
     <link href="{{ asset('lib/animate/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
@@ -51,85 +53,76 @@
         </div> -->
         <!-- Spinner End -->
 
-        <!-- Navbar Start -->
-        <div class="container-fluid nav-bar bg-transparent">
-            <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
-                    <div class="icon p-2 me-2">
-                        <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style="width: 30px; height: 30px;">
-                    </div>
-                    <h1 class="m-0 text-primary">kichu Lagbe </h1>
-                </a>
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-    <div class="navbar-nav ms-auto">
+      <div class="container-fluid nav-bar bg-transparent">
+    <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
+        <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
+            <div class="icon p-2 me-2">
+                <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style="width: 30px; height: 30px;">
+            </div>
+            <h1 class="m-0 text-primary">kichu Lagbe</h1>
+        </a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto">
+                <a href="{{ url('/home') }}" class="nav-item nav-link {{ request()->is('home') ? 'active' : '' }}">Home</a>
 
-        <a href="{{ url('/home') }}" class="nav-item nav-link {{ request()->is('home') ? 'active' : '' }}">Home</a>
+                <a href="{{ url('about') }}" class="nav-item nav-link {{ request()->routeIs('about') ? 'active' : '' }}">About</a>
 
-        <a href="{{ route('about') }}" class="nav-item nav-link {{ request()->routeIs('about') ? 'active' : '' }}">About</a>
-
+                @auth
+                      @if(Auth::user()->role === 'seller')
         <a href="{{ route('products.index') }}" class="nav-item nav-link {{ request()->routeIs('products.index') ? 'active' : '' }}">My Item</a>
+    @endif
 
-        <a href="{{ route('contact') }}" class="nav-item nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
+    @if(Auth::user()->role === 'admin')
 
-        @guest
-            @if (Route::has('login'))
-                <a class="nav-item nav-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">{{ __('Login') }}</a>
-            @endif
 
-            @if (Route::has('register'))
-                <a class="nav-item nav-link {{ request()->routeIs('register') ? 'active' : '' }}" href="{{ route('register') }}">{{ __('Register') }}</a>
-            @endif
-        @else
-            @if(Auth::user()->img)
-                <img src="{{ asset('storage/' . Auth::user()->img) }}" alt="Profile" class="rounded-circle me-2 mt-3" style="width:40px; height:40px; object-fit:cover;">
-            @endif
+         <a  href="{{ route('category.index') }}"  class="nav-item nav-link {{ request()->routeIs('category.index') ? 'active' : '' }}">Manage Categories</a>
+    @endif
+                @endauth
 
-            <li class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    {{ Auth::user()->name }}
-                </a>
+                <a href="{{ url('contact') }}" class="nav-item nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
 
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('profile.edit', Auth::id()) }}">
-                        {{ __('Profile') }}
-                    </a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                    </a>
+                @guest
+                    @if (Route::has('login'))
+                        <a class="nav-item nav-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    @endif
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                </div>
-            </li>
-        @endguest
+                    @if (Route::has('register'))
+                        <a class="nav-item nav-link {{ request()->routeIs('register') ? 'active' : '' }}" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    @endif
+                @else
+                    @if(Auth::user()->img)
+                        <img src="{{ asset('storage/' . Auth::user()->img) }}" alt="Profile" class="rounded-circle me-2 mt-3" style="width:40px; height:40px; object-fit:cover;">
+                    @endif
 
-        @auth
-            @if(Auth::user()->role === 'admin')
-                <div>
-                    <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('category.index') }}">Manage Categories</a>
-                </div>
-            @elseif(Auth::user()->role === 'seller')
-                <div>
-                    <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('products.create') }}">Add Product</a>
-                </div>
-            @elseif(Auth::user()->role === 'buyer')
-                <div>
-                    <a class="btn btn-primary my-3 px-3 d-none d-lg-flex" href="{{ route('shop.index') }}">Shop</a>
-                </div>
-            @endif
-        @endauth
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->name }}
+                        </a>
 
-    </div>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('profile.edit', Auth::id()) }}">
+                                {{ __('Profile') }}
+                            </a>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                @endguest
+            </div>
+        </div>
+    </nav>
 </div>
 
-            </nav>
-        </div>
         <!-- Navbar End -->
         <main class="py-4">
             @yield('content')
@@ -219,12 +212,14 @@
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-    <!-- JavaScript Libraries -->
- <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('js/easing.min.js') }}"></script>
-<script src="{{ asset('js/waypoints.min.js') }}"></script>
-<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+
 
     <!-- Template Javascript --><!-- jQuery (required) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

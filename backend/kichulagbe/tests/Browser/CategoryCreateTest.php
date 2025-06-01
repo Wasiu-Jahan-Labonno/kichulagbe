@@ -20,9 +20,9 @@ class CategoryCreateTest extends DuskTestCase
 
             $browser->loginAs(\App\Models\User::first()) // Ensure an authenticated user
                     ->visit('/category/create')
-                    ->type('name', 'Category7')
-                    ->type('slug', 'category7')
-              ->attach('img', base_path('tests\Browser\files\sample.png'))
+                    ->type('name', 'Category10')
+                    ->type('slug', 'category10')
+              ->attach('img', base_path('tests/Browser/files/sample.png'))
 // Provide a sample image path
                     ->press('Create Category')
                     ->pause(2000)
