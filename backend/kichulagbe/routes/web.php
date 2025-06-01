@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\{HomeController,ProductController,OrderController,CategoryController,ShopController,};
+use App\Http\Controllers\{HomeController,ProductController,OrderController,CategoryController,ShopController,CartController};
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\UserController;
 
@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     });
    Route::resource('products', ProductController::class);
     Route::get('/list', [HomeController::class, 'list'])->name('list');
+    Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
 
   /*   Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show'); */
     /* // Product Management

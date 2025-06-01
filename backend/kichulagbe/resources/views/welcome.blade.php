@@ -56,7 +56,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <!-- 
+                        <!--
                         <a href="{{ route('home') }}" class="nav-item nav-link active">Home</a> -->
 
                         <a href="about.html" class="nav-item nav-link">About</a>

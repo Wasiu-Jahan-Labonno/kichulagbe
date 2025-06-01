@@ -6,17 +6,18 @@
 <div class="container-fluid header bg-white p-0">
     <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
         <div class="col-md-6 p-5 mt-lg-5">
-            <h1 class="display-5 animated fadeIn mb-4">Your <span class="text-primary"> One-Stop </span> Marketplace for All Things Great</h1>
-            <p class="animated fadeIn mb-4 pb-2">Discover the convenience of finding everything you need, all in one place!</p>
+            <h1 class="display-5 animated fadeIn mb-4">Find A <span class="text-primary">Perfect a Solution</span> To all your needs</h1>
+            <p class="animated fadeIn mb-4 pb-2">
+Welcome to Lagbe Kichu ! your ultimate destination for everything you need! From stylish clothing and modern furniture to dream properties and the latest gadgets, we bring a wide range of quality products to your fingertips.</p>
             <a href="" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Get Started</a>
         </div>
         <div class="col-md-6 animated fadeIn">
             <div class="owl-carousel header-carousel">
                 <div class="owl-carousel-item">
-                    <img class="img-fluid" src="img/carousel-1.jpg" alt="">
+                    <img class="img-fluid" src="{{ asset('img/carousel-1.jpg') }}" alt="">
                 </div>
                 <div class="owl-carousel-item">
-                    <img class="img-fluid" src="img/carousel-2.jpg" alt="">
+                    <img class="img-fluid" src="{{ asset('img/carousel-2.jpg') }}" alt="">
                 </div>
             </div>
         </div>
@@ -37,8 +38,8 @@
                     <div class="col-md-4">
                         <select class="form-select border-0 py-3">
                             <option selected>Item Type</option>
-                            <option value="1">Property</option>
-                            <option value="2">Clothing</option>
+                            <option value="1">Clothing</option>
+                            <option value="2">Property</option>
                             <option value="3">Furniture</option>
                             <option value="4">Electronics</option>
                         </select>
@@ -64,10 +65,9 @@
 <!-- Category Start -->
 <div class="container-xxl py-5">
     <div class="container">
-
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-            <h1 class="mb-3 text-center">Categories</h1>
-            <p>Explore various categories of items available on our platform.</p>
+            <h1 class="mb-3">Categories</h1>
+            <p>Explore various items available on our platform.</p>
         </div>
         <div class="row g-4">
             @foreach ($categories as $category)
@@ -75,7 +75,7 @@
                     <a class="cat-item d-block bg-light text-center rounded p-3" href="#">
                         <div class="rounded p-4">
                             <div class="icon mb-3">
-                                <img class="img-fluid" src="{{ $category->image ?? 'default-image.jpg' }}" alt="Icon">
+                                <img class="img-fluid" src=" {{ asset('storage/' . $category->img) }}" alt="Icon">
                             </div>
                             <h6>{{ $category->name }}</h6>
                             <span>{{ $category->properties_count }} Properties</span> <!-- Replace with the actual property count field -->
@@ -99,11 +99,12 @@
                 </div>
             </div>
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                <h1 class="mb-4">Your Place That Meets All Your Needs</h1>
-                <p class="mb-4">With our user-friendly platform, secure transactions, and prompt delivery, we make shopping easier and more enjoyable. Discover the convenience of finding everything you need, all in one place!</p>
-                <p><i class="fa fa-check text-primary me-3"></i>User Friendly platform</p>
-                <p><i class="fa fa-check text-primary me-3"></i>Secure Transactions</p>
-                <p><i class="fa fa-check text-primary me-3"></i>Fast Delivery</p>
+                <h1 class="mb-4">Your One-Stop Marketplace for All Things Great</h1>
+                <p class="mb-4">Our goal is to offer you a seamless shopping experience, whether you're upgrading your home, refreshing your wardrobe, or making a major investment in real estate. With our
+</p>
+                <p><i class="fa fa-check text-primary me-3"></i>user friendly platform</p>
+                <p><i class="fa fa-check text-primary me-3"></i>secure transactions</p>
+                <p><i class="fa fa-check text-primary me-3"></i>Fast delivery</p>
                 <a class="btn btn-primary py-3 px-5 mt-3" href="">Read More</a>
             </div>
         </div>
@@ -120,7 +121,7 @@
             <div class="col-lg-6">
                 <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
                     <h1 class="mb-3">Item Listing</h1>
-                    <p>Discover quality, style, and value all in one place. Whether it’s fashion, furniture, or property find what you need, when you need it.</p>
+                    <p>We make shopping easier and more enjoyable. Discover the convenience of finding everything you need, all in one place!</p>
                 </div>
             </div>
             <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
@@ -133,6 +134,7 @@
                 </ul>
             </div>
         </div>
+
         <div class="tab-content">
             @foreach($categories as $category)
                 <div id="tab-{{ $category->id }}" class="tab-pane fade show p-0 {{ $loop->first ? 'active' : '' }}">
@@ -142,24 +144,52 @@
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="property-item rounded overflow-hidden">
                                     <div class="position-relative overflow-hidden">
-                                        <a href=""><img class="img-fluid" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"></a>
+                                        @if($product->image)
+                                            <a href=""><img class="img-fluid" src=" {{ asset('storage/' . $product->image) }} " alt="{{ $product->name }}"></a>
+                                        @else
+                                            <p>Image not found: {{ asset('storage/categories/' . $product->image) }}</p>
+                                            <a href=""><img class="img-fluid" src="{{ asset('images/default-product.jpg') }}" alt="Default Image"></a>
+                                        @endif
                                         <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">{{ $category->name }}</div>
                                     </div>
                                     <div class="p-4 pb-0">
                                         <h5 class="text-primary mb-3">${{ number_format($product->price, 2) }}</h5>
-                                        <a class="d-block h5 mb-2" href="">{{ $product->name }}</a> <!-- This is where the product name is displayed -->
+                                        <a class="d-block h5 mb-2" href="">{{ $product->name }}</a>
                                         <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ $product->description }}</p>
                                     </div>
-                                    <div class="d-flex border-top">
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-ruler-combined text-primary me-2"></i>{{ $product->stock }} Sqft</small>
-                                        <small class="flex-fill text-center border-end py-2"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                        <small class="flex-fill text-center py-2"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cartModal{{ $product->id }}">
+                                            Add to Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal for Add to Cart -->
+                            <div class="modal fade" id="cartModal{{ $product->id }}" tabindex="-1" aria-labelledby="cartModalLabel{{ $product->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="cartModalLabel{{ $product->id }}">{{ $product->name }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you want to add <strong>{{ $product->name }}</strong> to your cart for <strong>${{ number_format($product->price, 2) }}</strong>?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary">Yes, Add to Cart</button>
+                                            </form>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+
                         <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
-                            <a class="btn btn-primary py-3 px-5" href="{{ route('list') }}">Browse More Items</a>
+                            <a class="btn btn-primary py-3 px-5" href="{{ route('list') }}">Browse More Item</a>
                         </div>
                     </div>
                 </div>
@@ -174,58 +204,85 @@
 
 
 
-
-
-
-
-<!-- Testimonial Start -->
+<!-- Team Start -->
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
             <h1 class="mb-3">Our Clients Say!</h1>
-            <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
+            <p>We Are delivered products in time and they were well maintained</p>
         </div>
-        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-            <div class="testimonial-item bg-light rounded p-3">
-                <div class="bg-white border rounded p-4">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                    <div class="d-flex align-items-center">
-                        <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-1.jpg" style="width: 45px; height: 45px;">
-                        <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="team-item rounded overflow-hidden">
+                    <div class="position-relative">
+                        <img class="img-fluid" src="img/team-1.jpg" alt="">
+                        <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                         </div>
+                    </div>
+                    <div class="text-center p-4 mt-3">
+                        <h5 class="fw-bold mb-0">Max Larson</h5>
+                        <small>"I am very satisfied with Lagbe Kichu ."</small>
                     </div>
                 </div>
             </div>
-            <div class="testimonial-item bg-light rounded p-3">
-                <div class="bg-white border rounded p-4">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                    <div class="d-flex align-items-center">
-                        <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-2.jpg" style="width: 45px; height: 45px;">
-                        <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="team-item rounded overflow-hidden">
+                    <div class="position-relative">
+                        <img class="img-fluid" src="img/team-2.jpg" alt="">
+                        <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                         </div>
+                    </div>
+                    <div class="text-center p-4 mt-3">
+                        <h5 class="fw-bold mb-0">Nafisa Afra</h5>
+                        <small>"The products are delivered on time and the quality is immaculate!"</small>
                     </div>
                 </div>
             </div>
-            <div class="testimonial-item bg-light rounded p-3">
-                <div class="bg-white border rounded p-4">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                    <div class="d-flex align-items-center">
-                        <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-3.jpg" style="width: 45px; height: 45px;">
-                        <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="team-item rounded overflow-hidden">
+                    <div class="position-relative">
+                        <img class="img-fluid" src="img/team-3.jpg" alt="">
+                        <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
                         </div>
+                    </div>
+                    <div class="text-center p-4 mt-3">
+                        <h5 class="fw-bold mb-0">Lara Arson</h5>
+                        <small>"I will be recommending this site to my closest people and am looking forward to order more"</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                <div class="team-item rounded overflow-hidden">
+                    <div class="position-relative">
+                        <img class="img-fluid" src="img/team-4.jpg" alt="">
+                        <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-center p-4 mt-3">
+                        <h5 class="fw-bold mb-0">Sadman Sakib</h5>
+                        <small>"Hoping they would widen their product range but I am happy with their current services"</small>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Testimonial End -->
+<!-- Team End -->
+
+
+
 
 <!-- <div class="container">
     <div class="row justify-content-center">

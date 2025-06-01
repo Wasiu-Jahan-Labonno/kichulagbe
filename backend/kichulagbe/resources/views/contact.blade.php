@@ -43,9 +43,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <iframe class="position-relative rounded w-100 h-100"
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d3652.0336337269637!2d90.3843089!3d23.74618!3m2!1i1024!2i768!4f13.1!2m1!1sBir%20Uttam%20Shafiullah%20Sarak%20Green%20Rd%20Dhaka%201205!5e0!3m2!1sen!2sbd!4v1746223793691!5m2!1sen!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                           </iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3652.038678919571!2d90.3830345251873!3d23.74600007867338!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sbir%20uttam%20shafiullah%20sarak%20green%20rd%20dhaka%201205!5e0!3m2!1sen!2sbd!4v1746241375643!5m2!1sen!2sbd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <div class="col-md-6">
                         <div class="wow fadeInUp" data-wow-delay="0.5s">
