@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Card;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -92,6 +95,12 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+    }
+
+      public function card()
+    {
+        $cards = Card::with('category')->get(); // Fetch cards with their categories
+        return view('products.index', compact('cards'));
     }
 }
 

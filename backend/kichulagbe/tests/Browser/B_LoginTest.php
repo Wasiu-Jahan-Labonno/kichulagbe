@@ -20,8 +20,8 @@ class B_LoginTest extends DuskTestCase
                 ->type('password', 'password')
                 ->press('#login-button') // Use press with button ID or text
                 ->pause(10000) // Pause for 10 seconds (10,000 milliseconds)
-                ->assertSee('Perfect Home'); // Check for successful login
+                ->assertPathIs('/home'); // Check for successful login
         });
-    
+
 }
 }

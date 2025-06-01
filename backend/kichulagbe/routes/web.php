@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\{HomeController,ProductController,OrderController,CategoryController,ShopController,};
+use App\Http\Controllers\{Controller, CartController,HomeController, ProductController, OrderController, CategoryController, ShopController,};
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\UserController;
 
@@ -19,10 +19,12 @@ use Illuminate\Contracts\Routing\Registrar;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
 });
+ */
 
+Route::get('/', [Controller::class, 'welcome'])->name('welcome');
 Auth::routes();
 
 // Public Routes
@@ -35,6 +37,10 @@ Route::get('about', [HomeController::class, 'about'])->name('about');
         Route::put('update', [UserController::class, 'update'])->name('profile.update');
     }); */
 // Authenticated Routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('categories', 'CategoryController');
+});
+
 Route::middleware(['auth'])->group(function () {
 
     // Profile Routes (Grouped under 'profile' prefix)
@@ -42,10 +48,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('{user}', [UserController::class, 'edit'])->name('profile.edit');
         Route::put('update', [UserController::class, 'update'])->name('profile.update');
     });
-   Route::resource('products', ProductController::class);
+    Route::resource('products', ProductController::class);
     Route::get('/list', [HomeController::class, 'list'])->name('list');
+    Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
 
-  /*   Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show'); */
+    /*   Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show'); */
     /* // Product Management
     Route::resource('products', ProductController::class)->except(['show']);
 
