@@ -9,3 +9,4 @@ php artisan dusk:chrome-driver --detect
 php artisan serve --port=8080
 
 php artisan dusk
+ php artisan dusk --filter=ProductCreateTest
